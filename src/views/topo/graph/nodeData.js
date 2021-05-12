@@ -1,156 +1,5 @@
 import { Graph, Dom, Node } from '@antv/x6'
 // 调用 Graph 的静态方法 registerNode 来注册节点，注册以后就可以像使用内置节点那样来使用节点
-export const BasicChartRect = Graph.registerNode('basic-chart-rect', {
-  inherit: 'rect', // 指定继承的基类
-  width: 75,
-  height: 30,
-  label: 'Child',
-  attrs: {
-    body: {
-      stroke: '#5F95FF', // 边框颜色
-      strokeWidth: 1,
-      fill: 'rgba(95,149,255,0.05)' // 填充颜色
-    },
-    fo: {
-      refWidth: '100%',
-      refHeight: '100%'
-    },
-    foBody: {
-      xmlns: Dom.ns.xhtml,
-      style: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }
-    },
-    'edit-text': {
-      contenteditable: 'false',
-      class: 'x6-edit-text',
-      style: {
-        width: '100%',
-        textAlign: 'center',
-        fontSize: 12,
-        color: 'rgba(0,0,0,0.85)'
-      }
-    },
-    text: {
-      fontSize: 12,
-      fill: 'rgba(0,0,0,0.85)',
-      textWrap: {
-        text: '',
-        width: -10
-      }
-    }
-  },
-  markup: [ // 渲染节点/边时使用的 SVG/HTML 片段
-    {
-      tagName: 'rect',
-      selector: 'body'
-    },
-    {
-      tagName: 'text',
-      selector: 'text'
-    },
-    {
-      tagName: 'foreignObject',
-      selector: 'fo',
-      children: [
-        {
-          ns: Dom.ns.xhtml, // 与 tagName 对应的元素命名空间
-          tagName: 'body',
-          selector: 'foBody',
-          children: [
-            {
-              tagName: 'div',
-              selector: 'edit-text'
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  // 链接桩是节点上的固定连接点
-  ports: {
-    groups: {
-      top: {
-        position: 'top',
-        attrs: {
-          circle: {
-            r: 3,
-            magnet: true, // 链接桩在连线交互时可以被连接上
-            stroke: '#5F95FF',
-            strokeWidth: 1,
-            fill: '#fff',
-            style: {
-              visibility: 'hidden'
-            }
-          }
-        }
-      },
-      right: {
-        position: 'right',
-        attrs: {
-          circle: {
-            r: 3,
-            magnet: true,
-            stroke: '#5F95FF',
-            strokeWidth: 1,
-            fill: '#fff',
-            style: {
-              visibility: 'hidden'
-            }
-          }
-        }
-      },
-      bottom: {
-        position: 'bottom',
-        attrs: {
-          circle: {
-            r: 3,
-            magnet: true,
-            stroke: '#5F95FF',
-            strokeWidth: 1,
-            fill: '#fff',
-            style: {
-              visibility: 'hidden'
-            }
-          }
-        }
-      },
-      left: {
-        position: 'left',
-        attrs: {
-          circle: {
-            r: 3,
-            magnet: true,
-            stroke: '#5F95FF',
-            strokeWidth: 1,
-            fill: '#fff',
-            style: {
-              visibility: 'hidden'
-            }
-          }
-        }
-      }
-    },
-    items: [
-      {
-        group: 'top'
-      },
-      {
-        group: 'right'
-      },
-      {
-        group: 'bottom'
-      },
-      {
-        group: 'left'
-      }
-    ]
-  }
-})
 export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
   inherit: 'rect', // 指定继承的基类
   width: 80,
@@ -304,8 +153,8 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
 
 export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
   inherit: 'rect',
-  width: 200,
-  height: 60,
+  width: 80,
+  height: 30,
   attrs: {
     body: {
       stroke: '#5F95FF',
@@ -313,27 +162,931 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
       fill: 'rgba(95,149,255,0.05)'
     },
     image: {
-      'xlink:href': require('@/assets/logo.svg'),
+      'xlink:href': require('@/assets/images/u789.svg'),
       width: 16,
       height: 16,
-      x: 12,
-      y: 12
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
     },
-    title: {
-      text: 'Node',
-      refX: 40,
-      refY: 14,
-      fill: 'rgba(0,0,0,0.85)',
-      fontSize: 12,
-      'text-anchor': 'start'
+    {
+      tagName: 'image',
+      selector: 'image'
     },
-    text: {
-      text: 'this is content text',
-      refX: 40,
-      refY: 38,
-      fontSize: 12,
-      fill: 'rgba(0,0,0,0.6)',
-      'text-anchor': 'start'
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const FileTransferImageRect = Graph.registerNode('file-transfer-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u565.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const FinancGatewayImageRect = Graph.registerNode('financ-gateway-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u587.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const FlowInsideImageRect = Graph.registerNode('flow-inside-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u601.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const ConfigCenterImageRect = Graph.registerNode('config-center-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u607.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const MysqlImageRect = Graph.registerNode('mysql-image-rect', {
+  inherit: 'rect',
+  width: 85,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u547.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const RedisImageRect = Graph.registerNode('redis-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u560.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const F5ImageRect = Graph.registerNode('f5-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u588.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
+    }
+  },
+  markup: [
+    {
+      tagName: 'rect',
+      selector: 'body'
+    },
+    {
+      tagName: 'image',
+      selector: 'image'
+    },
+    {
+      tagName: 'text',
+      selector: 'title'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
+    }
+  ],
+  ports: {
+    groups: {
+      top: {
+        position: 'top',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      bottom: {
+        position: 'bottom',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
+    },
+    items: [
+      {
+        group: 'top'
+      },
+      {
+        group: 'right'
+      },
+      {
+        group: 'bottom'
+      },
+      {
+        group: 'left'
+      }
+    ]
+  }
+})
+export const FirewallImageRect = Graph.registerNode('firewall-image-rect', {
+  inherit: 'rect',
+  width: 80,
+  height: 30,
+  attrs: {
+    body: {
+      stroke: '#5F95FF',
+      strokeWidth: 1,
+      fill: 'rgba(95,149,255,0.05)'
+    },
+    image: {
+      'xlink:href': require('@/assets/images/u596.svg'),
+      width: 16,
+      height: 16,
+      x: 7,
+      y: 7
     }
   },
   markup: [
@@ -574,7 +1327,6 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
     ]
   }
 })
-
 export const FlowChartAnimateText = Graph.registerNode(
   'flow-chart-animate-text',
   {
@@ -614,7 +1366,6 @@ export const FlowChartAnimateText = Graph.registerNode(
     ]
   }
 )
-
 export class NodeGroup extends Node {
   // private collapsed: boolean = true
   collapsed = true;
@@ -656,7 +1407,6 @@ export class NodeGroup extends Node {
   //   this.collapsed = target
   // }
 }
-
 NodeGroup.config({
   shape: 'rect',
   markup: [

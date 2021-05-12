@@ -7,6 +7,7 @@ const article = require('./article')
 const search = require('./remote-search')
 const component = require('./component')
 const topologicalList = require('./topological-list')
+const topoList = require('./topoList')
 
 const mocks = [
   ...user,
@@ -14,7 +15,8 @@ const mocks = [
   ...article,
   ...search,
   ...component,
-  ...topologicalList
+  ...topologicalList,
+  ...topoList
 ]
 
 // for front mock

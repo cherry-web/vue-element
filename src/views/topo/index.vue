@@ -6,87 +6,109 @@
     width="100%"
     @close="onClose"
   > -->
-    <div class="wrap">
-      <div class="content">
-        <!--左侧工具栏-->
-        <div id="flowStencil" class="sider" />
-        <div class="panel">
-          <!--流程图工具栏-->
-          <div class="toolbar">
-            <tool-bar v-if="isReady" />
-          </div>
-          <!--流程图画板-->
-          <div id="flowContainer" class="x6-graph" />
+  <div class="wrap">
+    <div class="content">
+      <!--左侧工具栏-->
+      <div id="flowStencil" class="sider" />
+      <div class="panel">
+        <!--流程图工具栏-->
+        <div class="toolbar">
+          <tool-bar v-if="isReady" />
         </div>
-        <!--右侧工具栏-->
-        <el-drawer placement="right" size="20%" :withHeader="false" :closable="true" :visible="visible" width="100%" @close="onClose" >
-          <div class="config">
-            <config-panel v-if="isReady" :id="id"/>
-          </div>
-        </el-drawer>
+        <!--流程图画板-->
+        <div id="flowContainer" class="x6-graph" />
       </div>
+      <!--右侧工具栏-->
+      <el-drawer
+        placement="right"
+        size="20%"
+        :with-header="false"
+        :closable="true"
+        :visible="visible"
+        width="100%"
+        @close="onClose"
+      >
+        <div class="config">
+          <config-panel v-if="isReady" :cell-obj="cellObj" />
+        </div>
+      </el-drawer>
     </div>
- <!-- </el-drawer> -->
+  </div>
+  <!-- </el-drawer> -->
 </template>
 
 <script>
 // import './index.less'
-import FlowGraph from "./graph";
-import ToolBar from "@/components/topo/ToolBar";
-import ConfigPanel from "@/components/topo/ConfigPanel";
+import FlowGraph from './graph'
+import ToolBar from '@/components/topo/ToolBar'
+import ConfigPanel from '@/components/topo/ConfigPanel'
 
 export default {
-  name: "Index",
+  name: 'Index',
   components: {
     ToolBar,
-    ConfigPanel,
+    ConfigPanel
   },
   data() {
     return {
       visible: false,
       isReady: true,
-      id: ''
-    };
+      cellObj: { id: '', cellType: '' }
+    }
   },
   mounted() {
-    this.showDrawer();
+    this.showDrawer()
   },
   methods: {
     showDrawer() {
       setTimeout(() => {
-        this.initGraph();
-      }, 100);
+        this.initGraph()
+      }, 100)
     },
     onClose() {
-      this.visible = false;
+      this.visible = false
     },
     getContainerSize() {
       return {
         width: document.body.offsetWidth - 500,
-        height: document.body.offsetHeight - 38,
-      };
+        height: document.body.offsetHeight - 38
+      }
     },
     initGraph() {
-      const graph = FlowGraph.init();
-       graph.on('edge:contextmenu', ({ cell, view }) => {
-         if(!this.visible){
-           this.visible = true
-         }
-         this.id = cell.prop('id')
-       })
-      this.isReady = true;
+      const graph = FlowGraph.init()
+      graph.on('cell:contextmenu', ({ cell }) => {
+        if (cell.isNode()) {
+          const idNode = cell.id
+          if (
+            idNode === 'mainMachineRoom' ||
+            idNode === 'OAArea' ||
+            idNode === 'coreArea' ||
+            idNode === 'DMZArea' ||
+            idNode === 'publicNetArea' ||
+            idNode === 'lineArea'
+          ) {
+            return
+          }
+        }
+        if (!this.visible) {
+          this.visible = true
+        }
+        this.cellObj.id = cell.prop('id')
+        this.cellObj.cellType = cell.isNode() ? 'node' : 'edge'
+      })
+      this.isReady = true
       const resizeFn = () => {
-        const { width, height } = this.getContainerSize();
-        graph.resize(width, height);
-      };
-      resizeFn();
-      window.addEventListener("resize", resizeFn);
+        const { width, height } = this.getContainerSize()
+        graph.resize(width, height)
+      }
+      resizeFn()
+      window.addEventListener('resize', resizeFn)
       return () => {
-        window.removeEventListener("resize", resizeFn);
-      };
-    },
-  },
-};
+        window.removeEventListener('resize', resizeFn)
+      }
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
