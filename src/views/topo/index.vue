@@ -22,7 +22,6 @@
       <el-drawer
         placement="right"
         size="20%"
-        :with-header="false"
         :closable="true"
         :visible="visible"
         width="100%"
@@ -152,7 +151,7 @@ export default {
       width: 290px;
       height: 100%;
       padding: 0 10px;
-      border-left: 1px solid rgba(0, 0, 0, 0.08);
+      // border-left: 1px solid rgba(0, 0, 0, 0.08);
     }
   }
 }

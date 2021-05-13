@@ -1,8 +1,7 @@
 import extendBaseNode from './extendBaseNode'
 import { FunctionExt } from '@antv/x6'
-import {
-  isConnectEdge
-} from '@/api/topoList'
+import { isConnectEdge } from '@/api/topoList'
+import { Message } from 'element-ui'
 
 export default class graphEvent {
   static graphEvent(graphData) {
@@ -120,6 +119,14 @@ export default class graphEvent {
       }
       isConnectEdge(listQuery).then((response) => {
         console.log(response)
+        if (!response.data.status) {
+          Message({
+            message: '这两个节点禁止连接',
+            type: 'warning',
+            duration: 5 * 1000
+          })
+          graph.removeEdge(edge)
+        }
       })
     })
   }

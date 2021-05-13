@@ -1,40 +1,44 @@
 <template>
-  <el-tabs default-active-key="1">
-    <el-tab-pane key="1" tab="线条">
-      <el-row align="middle">
-        <el-col :span="8" align="middle">线条样式</el-col>
-        <el-col :span="14">
-          <el-select
-            v-model="value"
-            style="width: 100%"
-            @change="onConnectorChange"
-          >
-            <el-option
-              v-for="(item, index) in connectorOptions"
-              :key="index"
-              :value="item.key"
-              :label="item.value"
-            />
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="14">
-          <el-button type="danger" icon="el-icon-delete" @click="deleteEdge">删除边</el-button>
-        </el-col>
-      </el-row>
-    </el-tab-pane>
-  </el-tabs>
+  <!-- <el-tabs default-active-key="1">
+    <el-tab-pane key="1" tab="线条"> -->
+  <div class="config">
+    <el-row align="middle">
+      <el-col :span="8" align="middle">事件类型 : </el-col>
+      <el-col :span="14">
+        <el-select
+          v-model="value"
+          size="mini"
+          style="width: 100%"
+          @change="onConnectorChange"
+        >
+          <el-option
+            v-for="(item, index) in connectorOptions"
+            :key="index"
+            :value="item.key"
+            :label="item.value"
+          />
+        </el-select>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="8" align="middle">相关操作 : </el-col>
+      <el-col :span="14">
+        <el-button type="text" icon="el-icon-delete" @click="deleteEdge">删除边</el-button>
+      </el-col>
+    </el-row>
+  </div>
+  <!-- </el-tab-pane>
+  </el-tabs> -->
 </template>
 
 <script>
 import FlowGraph from '@/views/topo/graph'
 
 const connectorOptions = [
-  { key: 'blackSolidLine', value: '黑实线' },
-  { key: 'redSolidLine', value: '红实线' },
-  { key: 'blackDottedLine', value: '黑虚线' },
-  { key: 'redDottedLine', value: '红虚线' }
+  { key: 'blackSolidLine', value: '类型一' },
+  { key: 'redSolidLine', value: '类型二' },
+  { key: 'blackDottedLine', value: '类型三' },
+  { key: 'redDottedLine', value: '类型四' }
 ]
 // const connectorValue = connectorOptions.reduce((acc, cur) => {
 //   acc[cur.key] = cur.value
@@ -153,7 +157,25 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-row {
+.config {
+  line-height: 32px;
   margin: 10px 0;
+  // .result {
+  //   background: #eee;
+  //   color: #333333;
+  //   padding: 3px 7px;
+  //   border-radius: 10px;
+  //   display: inline-block;
+  //   font-size: 12px;
+  //   margin-left: 8px;
+  //   line-height: 1.25;
+  //   margin-top: 8px;
+  // }
+}
+.el-row {
+  margin: 10px 5px;
+}
+.el-col{
+  line-height: 36px;
 }
 </style>
