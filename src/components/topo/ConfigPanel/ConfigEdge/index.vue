@@ -160,17 +160,6 @@ export default {
 .config {
   line-height: 32px;
   margin: 10px 0;
-  // .result {
-  //   background: #eee;
-  //   color: #333333;
-  //   padding: 3px 7px;
-  //   border-radius: 10px;
-  //   display: inline-block;
-  //   font-size: 12px;
-  //   margin-left: 8px;
-  //   line-height: 1.25;
-  //   margin-top: 8px;
-  // }
 }
 .el-row {
   margin: 10px 5px;

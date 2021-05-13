@@ -45,15 +45,26 @@ export default class graphEvent {
     )
     // 拖拽节点进入画布后可判断此节点是否可放入该区域
     graph.on('cell:change:children', ({ cell, key, current }) => {
-      console.log('%%%%%%%%%%%')
+      console.log('拖拽节点进入画布后可判断此节点是否可放入该区域')
       let parentNode = cell
       // 排除分组节点
       if (cell.prop('shape') === 'flowGroupNode') {
         parentNode = cell.getParent()
       }
-      console.log(cell)
-      console.log(parentNode)
-      console.log(current)
+      const nowNodeChild = parentNode.getChildren()
+      const nowNode = nowNodeChild[nowNodeChild.length - 1]
+      const parentNodeName = parentNode.attr('text/text')
+      isConnectEdge().then((response) => {
+        console.log(response.data.status)
+        if (!response.data.status) {
+          Message({
+            message: '此节点不能放入' + parentNodeName,
+            type: 'warning',
+            duration: 5 * 1000
+          })
+          graph.removeNode(nowNode)
+        }
+      })
     })
     // 鼠标离开
     graph.on('node:mouseleave', () => {
@@ -110,15 +121,13 @@ export default class graphEvent {
     })
     // 边连接/取消连接
     graph.on('edge:connected', ({ isNew, edge }) => {
-      console.log(isNew)
-      console.log(edge)
+      console.log('边连接/取消连接')
       const listQuery = {
         page: 1,
         limit: 20,
         sort: '+id'
       }
       isConnectEdge(listQuery).then((response) => {
-        console.log(response)
         if (!response.data.status) {
           Message({
             message: '这两个节点禁止连接',
