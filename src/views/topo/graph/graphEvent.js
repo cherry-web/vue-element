@@ -1,6 +1,6 @@
 import extendBaseNode from './extendBaseNode'
 import { FunctionExt } from '@antv/x6'
-import { isConnectEdge } from '@/api/topoList'
+import { isConnectEdge, verifyPlace } from '@/api/topoList'
 import { Message } from 'element-ui'
 
 export default class graphEvent {
@@ -45,15 +45,30 @@ export default class graphEvent {
     )
     // 拖拽节点进入画布后可判断此节点是否可放入该区域
     graph.on('cell:change:children', ({ cell, key, current }) => {
-      console.log('%%%%%%%%%%%')
       let parentNode = cell
       // 排除分组节点
       if (cell.prop('shape') === 'flowGroupNode') {
         parentNode = cell.getParent()
       }
-      console.log(cell)
-      console.log(parentNode)
-      console.log(current)
+      // console.log(parentNode);
+      let parentId = parentNode.id
+      let parentName = parentNode.label
+      if(parentNode.children.length){
+        let children = parentNode.children[parentNode.children.length -1]
+        if(graph.isNode(children)){
+          let childrenName = children.attrs.text.textWrap.text
+          verifyPlace({parent:parentId,children:childrenName}).then(res=>{
+            if(res.info==-1){
+              Message({
+                message: '该节点无法放置在 '+parentName,
+                type: 'error',
+                duration: 5 * 1000
+              })
+              graph.removeNode(children)
+            }
+          })
+        }
+      }
     })
     // 鼠标离开
     graph.on('node:mouseleave', () => {
@@ -89,13 +104,9 @@ export default class graphEvent {
         return
       }
       const children = node.getChildren()
-      // if (node.prop('shape') == 'flowGroupNode') {
-      //   node.prop('originSize', { width: 240, height: 240 })
-      // } else {
       if (children && children.length) {
         node.prop('originSize', node.getSize())
       }
-      // }
     })
     // 节点改变位置
     graph.on('node:change:position', ({ node, options }) => {
@@ -109,17 +120,12 @@ export default class graphEvent {
       extendBaseNode.extendNode(node, graphData)
     })
     // 边连接/取消连接
-    graph.on('edge:connected', ({ isNew, edge }) => {
-      console.log(isNew)
-      console.log(edge)
-      const listQuery = {
-        page: 1,
-        limit: 20,
-        sort: '+id'
-      }
-      isConnectEdge(listQuery).then((response) => {
-        console.log(response)
-        if (!response.data.status) {
+    graph.on('edge:connected', ({ isNew, edge,previousCell,currentCell }) => {
+      const source = edge.getSourceCell()
+      const sourceName = source.attrs.text.textWrap.text
+      const currentName = currentCell.attrs.text.textWrap.text
+      isConnectEdge({source:sourceName,current:currentName}).then(res => {
+        if (res.info==-1) {
           Message({
             message: '这两个节点禁止连接',
             type: 'warning',

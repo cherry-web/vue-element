@@ -25,3 +25,12 @@ export function createArticleCom(data) {
     data
   })
 }
+
+// 判断节点是否可以放在该区域
+export function verifyPlace(query) {
+  return request({
+    url: '/vue-element-admin/topoList/verifyPlace',
+    method: 'get',
+    params: query
+  })
+}
