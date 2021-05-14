@@ -50,7 +50,6 @@ export default class graphEvent {
       if (cell.prop('shape') === 'flowGroupNode') {
         parentNode = cell.getParent()
       }
-      // console.log(parentNode);
       let parentId = parentNode.id
       let parentName = parentNode.label
       if(parentNode.children.length){
