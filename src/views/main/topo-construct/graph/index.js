@@ -232,7 +232,7 @@ export default class FlowGraph {
     graphEvent.graphEvent(this)
   }
   static mainChange() {
-
+    
   }
   // 销毁
   static destroy() {

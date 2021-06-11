@@ -1,4 +1,4 @@
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 
 export function nodeOpt(id, globalGridAttr) {
   let curCel = null

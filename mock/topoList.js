@@ -7,7 +7,7 @@ let status = Mock.mock({
 
 const placeInfo = {
   OAArea:['后管','部署单元','文件传输'],
-  coreArea:['后管','部署单元','文件传输'],
+  coreArea:['后管','部署单元','文件传输','虚拟机','物理机'],
   DMZArea:['后管','部署单元','文件传输'],
   publicNetArea:['后管','部署单元','文件传输'],
   lineArea:['后管','部署单元','文件传输']

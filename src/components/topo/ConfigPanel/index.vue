@@ -10,7 +10,7 @@
 // import ConfigGrid from './ConfigGrid/index'
 import ConfigNode from './ConfigNode/index'
 import ConfigEdge from './ConfigEdge/index'
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 // import './index.less'
 const globalGridAttr = {
   type: 'mesh',

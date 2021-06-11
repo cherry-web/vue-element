@@ -1,5 +1,3 @@
-/** When your routing table is too long, you can split it into small modules **/
-
 import Layout from '@/layout'
 
 const topoRouter = {
@@ -11,7 +9,7 @@ const topoRouter = {
       path: 'topo',
       component: () => import('@/views/topo/index'),
       name: 'Topo',
-      meta: { title: '拓扑管理',icon: 'table' }
+      meta: { title: '拓扑构建',icon: 'table' }
     }
   ]
 }

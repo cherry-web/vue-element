@@ -43,9 +43,9 @@
 </template>
 
 <script>
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 import { DataUri } from '@antv/x6'
-import svgData from '@/views/topo/graph/svgData'
+import svgData from '@/views/main/topo-construct/graph/svgData'
 
 export default {
   name: 'Index',

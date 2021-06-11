@@ -22,7 +22,7 @@
 
 <script>
 import { nodeOpt } from './method'
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 
 export default {
   name: 'Index',

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 
 const connectorOptions = [
   { key: 'blackSolidLine', value: '类型一' },

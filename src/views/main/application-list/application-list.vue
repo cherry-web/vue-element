@@ -1,30 +1,20 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" type="primary" icon="el-icon-plus" size="mini" @click="handleCreate">
-        新建
-      </el-button>
+      <el-input class="filter-item" size="mini" placeholder="系统编码" v-model="listQuery.refName" style="width:140px;margin-right:10px" @keyup.native.enter="handleFilter"></el-input>
+      <el-input class="filter-item" size="mini" placeholder="应用名称" v-model="listQuery.refName" style="width:140px;margin-right:10px" @keyup.native.enter="handleFilter"></el-input>
+      <el-input class="filter-item" size="mini" placeholder="负责人" v-model="listQuery.refName" style="width:140px;margin-right:10px" @keyup.native.enter="handleFilter"></el-input>
+      <el-input class="filter-item" size="mini" placeholder="所属部门" v-model="listQuery.refName" style="width:140px;margin-right:10px" @keyup.native.enter="handleFilter"></el-input>
+      <el-button class="filter-item" size="mini" style="margin-left: 10px" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+      <el-button class="filter-item" size="mini" style="margin-left: 10px" type="default" icon="el-icon-reset" @click="resetTemp">重置</el-button>
     </div>
 
     <el-table v-loading="listLoading" :data="list" size="mini" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
       <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')"/>
-      <el-table-column label="关联名称" prop="refName" width="120px" align="center"/>
-      <el-table-column label="单向/双向" width="100px" align="center">
-        <template slot-scope="{ row }">
-          <el-tag>{{row.refMode | modeFilter(row.refMode) }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="关联类型" prop="refType" width="100px" align="center">
-        <template slot-scope="{ row }">
-          <span>{{ row.refType  | typeFilter(row.status)}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" width="100px" align="center">
-        <template slot-scope="{ row }">
-          <el-tag>{{ row.status  | statusFilter(row.status)}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" prop="refDesc" min-width="140px" align="center" show-overflow-tooltip/>
+      <el-table-column label="系统编码" prop="refName" width="90px" align="center"/>
+      <el-table-column label="应用名称" prop="refName" width="90px" align="center"/>
+      <el-table-column label="负责人" prop="refName" width="90px" align="center"/>
+      <el-table-column label="所属部门" prop="refDesc" min-width="100px" align="center" show-overflow-tooltip/>
       <el-table-column label="创建时间" align="center" width="140">
         <template slot-scope="{ row }">
           <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
@@ -35,19 +25,22 @@
           <span>{{ row.updateTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="240" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="360" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
+          <el-button type="default" size="mini" @click="handleUpdate(row)">
+            详情
+          </el-button>
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
+          <el-button size="mini" type="warning" @click="handleModifyStatus(row, 'end')">
+            拓扑
+          </el-button>
+          <el-button size="mini" type="success" @click="handleModifyStatus(row, 'start')">
+            部署
+          </el-button>
           <el-button v-if="row.status != 'deleted'" type="danger" size="mini" @click="handleDelete(row,$index)">
             删除
-          </el-button>
-          <el-button v-if="row.status=='start'" size="mini" type="warning" @click="handleModifyStatus(row, 'end')">
-            停用
-          </el-button>
-          <el-button v-if="row.status=='end'" size="mini" type="success" @click="handleModifyStatus(row, 'start')">
-            启用
           </el-button>
         </template>
       </el-table-column>
@@ -140,6 +133,7 @@ export default {
         page: 1,
         limit: 10,
         sort: "+id",
+        refName:''
       },
       deployStatusOptions,
       temp: {
@@ -207,7 +201,7 @@ export default {
       this.handleFilter();
     },
     resetTemp() {
-      this.temp = {
+      this.listQuery = {
         id: undefined,
         refName: "",
         refMode: "",

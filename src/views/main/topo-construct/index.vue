@@ -1,11 +1,4 @@
 <template>
-  <!-- <el-drawer
-    placement="right"
-    :closable="true"
-    :visible="visible"
-    width="100%"
-    @close="onClose"
-  > -->
   <div class="wrap">
     <div class="content">
       <!--左侧工具栏-->
