@@ -31,6 +31,7 @@ export default class shapeModuleData {
         parent: true
       }
     })
+
     const busModule1 = graph.createNode({
       shape: 'flow-chart-image-rect',
       attrs: {
@@ -57,7 +58,6 @@ export default class shapeModuleData {
         }
       }
     })
-
     const busModule3 = graph.createNode({
       shape: 'financ-gateway-image-rect',
       attrs: {
@@ -110,6 +110,8 @@ export default class shapeModuleData {
         }
       }
     })
+
+  
     const basicModule1 = graph.createNode({
       shape: 'mysql-image-rect',
       attrs: {
@@ -175,6 +177,7 @@ export default class shapeModuleData {
         }
       }
     })
+    
     graphData.stencil.load([virtualMachine, physicalMachine], 'runModule')
     graphData.stencil.load([busModule1, busModule2, busModule3, busModule4, busModule5, busModule6], 'businessModule')
     graphData.stencil.load([basicModule1, basicModule2, basicModule3, basicModule4, basicModule5], 'basicModule')

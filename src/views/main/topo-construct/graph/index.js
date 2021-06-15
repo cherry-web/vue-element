@@ -45,11 +45,6 @@ export default class FlowGraph {
             color: '#cccccc', // 主网格线颜色
             thickness: 1 // 主网格线宽度
           }
-          // {
-          //   color: '#5F95FF',
-          //   thickness: 1,
-          //   factor: 4  // 主次网格线间隔
-          // }
         ]
       },
       // 限制子节点自由

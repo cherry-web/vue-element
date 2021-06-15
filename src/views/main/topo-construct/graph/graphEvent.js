@@ -45,13 +45,21 @@ export default class graphEvent {
     )
     // 拖拽节点进入画布后可判断此节点是否可放入该区域
     graph.on('cell:change:children', ({ cell, key, current }) => {
-      let parentNode = cell
+      // console.log(cell);
+      // console.log(key);
+      // console.log(current);
+      let parentNode = cell;
+      let parentId = '';
+      let parentName = '';
       // 排除分组节点
       if (cell.prop('shape') === 'flowGroupNode') {
-        parentNode = cell.getParent()
+        console.log(parentNode);
+        parentId = 'flowGroupNode'
+        parentName = parentNode.attrs.text.textWrap.text
+      }else{
+        parentId = parentNode.id
+        parentName = parentNode.label
       }
-      let parentId = parentNode.id
-      let parentName = parentNode.label
       if(parentNode.children.length){
         let children = parentNode.children[parentNode.children.length -1]
         if(graph.isNode(children)){
@@ -63,6 +71,8 @@ export default class graphEvent {
                 type: 'error',
                 duration: 5 * 1000
               })
+              // console.log(graph.history);
+              // graph.history.undo()
               graph.removeNode(children)
             }
           })
@@ -121,18 +131,31 @@ export default class graphEvent {
     // 边连接/取消连接
     graph.on('edge:connected', ({ isNew, edge,previousCell,currentCell }) => {
       const source = edge.getSourceCell()
-      const sourceName = source.attrs.text.textWrap.text
-      const currentName = currentCell.attrs.text.textWrap.text
-      isConnectEdge({source:sourceName,current:currentName}).then(res => {
-        if (res.info==-1) {
-          Message({
-            message: '这两个节点禁止连接',
-            type: 'warning',
-            duration: 5 * 1000
-          })
-          graph.removeEdge(edge)
-        }
-      })
+      let parentSource = source.getParent()
+      parentSource = (parentSource.shape=='flowGroupNode')?parentSource.getParent():parentSource
+      let parentCurrent = currentCell.getParent()
+      parentCurrent = (parentCurrent.shape=='flowGroupNode')?parentCurrent.getParent():parentCurrent
+      if(parentSource.id==parentCurrent.id){
+        const sourceName = source.attrs.text.textWrap.text
+        const currentName = currentCell.attrs.text.textWrap.text
+        isConnectEdge({source:sourceName,current:currentName}).then(res => {
+          if (res.info==-1) {
+            Message({
+              message: '这两个节点禁止连接',
+              type: 'warning',
+              duration: 5 * 1000
+            })
+            graph.removeEdge(edge)
+          }
+        })
+      }else{
+        Message({
+          message: '节点跨区域禁止连接',
+          type: 'warning',
+          duration: 5 * 1000
+        })
+        graph.removeEdge(edge)
+      }
     })
   }
   static showPorts(ports, show) {

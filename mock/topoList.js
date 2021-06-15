@@ -10,7 +10,8 @@ const placeInfo = {
   coreArea:['后管','部署单元','文件传输','虚拟机','物理机'],
   DMZArea:['后管','部署单元','文件传输'],
   publicNetArea:['后管','部署单元','文件传输'],
-  lineArea:['后管','部署单元','文件传输']
+  lineArea:['后管','部署单元','文件传输'],
+  flowGroupNode:['部署单元']
 }
 
 const edgeInfo = {

@@ -30,7 +30,6 @@
 </template>
 
 <script>
-// import './index.less'
 import FlowGraph from './graph'
 import ToolBar from '@/components/topo/ToolBar'
 import ConfigPanel from '@/components/topo/ConfigPanel'
