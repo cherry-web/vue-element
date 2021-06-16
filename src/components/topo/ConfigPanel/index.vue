@@ -11,6 +11,7 @@
 import ConfigNode from './ConfigNode/index'
 import ConfigEdge from './ConfigEdge/index'
 import FlowGraph from '@/views/main/topo-construct/graph'
+import { getAttribute } from '@antv/x6/lib/util/dom/attr'
 // import './index.less'
 const globalGridAttr = {
   type: 'mesh',
@@ -39,7 +40,8 @@ const globalGridAttr = {
   nodeFill: '#ffffff',
   nodeFontSize: 12,
   nodeColor: '#080808',
-  nodeUsers: ''
+  nodeUsers: '',
+  attributeList:[]
 }
 
 export default {
@@ -60,7 +62,7 @@ export default {
     return {
       type: this.cellObj.cellType || '',
       id: this.cellObj.id,
-      globalGridAttr: globalGridAttr
+      globalGridAttr: globalGridAttr,
     }
   },
   watch: {
@@ -68,6 +70,7 @@ export default {
       handler(nv) {
         this.type = nv.cellType
         this.id = nv.id
+        this.globalGridAttr.attributeList = nv.attribute
       },
       immediate: true,
       deep: true

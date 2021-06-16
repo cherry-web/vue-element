@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: 'vue-eslint-parser',
     sourceType: 'module'
   },
   env: {
@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: ['eslint:recommended'], //'plugin:vue/recommended',
 
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
@@ -193,6 +193,7 @@ module.exports = {
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
-    'array-bracket-spacing': [2, 'never']
+    'array-bracket-spacing': [2, 'never'],
+    'semi':0
   }
 }

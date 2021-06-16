@@ -177,9 +177,101 @@ export default class shapeModuleData {
         }
       }
     })
+    const basicModule6 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'nginx'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule7 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'jvm'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule8 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'tomcat'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule9 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'du_logic'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule10 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'zookeeper'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule11 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'mq'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+    const basicModule12 = graph.createNode({
+      shape: 'config-center-image-rect',
+      attrs: {
+        text: {
+          textWrap: {
+            text: 'msoa'
+          },
+          fontSize: 12,
+          refX: 50,
+          refY: 17
+        }
+      }
+    })
+
     
     graphData.stencil.load([virtualMachine, physicalMachine], 'runModule')
     graphData.stencil.load([busModule1, busModule2, busModule3, busModule4, busModule5, busModule6], 'businessModule')
-    graphData.stencil.load([basicModule1, basicModule2, basicModule3, basicModule4, basicModule5], 'basicModule')
+    graphData.stencil.load([basicModule1, basicModule2, basicModule3, basicModule4, basicModule5,basicModule6,basicModule7,basicModule8,basicModule9,basicModule10,basicModule11,basicModule12], 'basicModule')
   }
 }

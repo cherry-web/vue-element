@@ -44,7 +44,23 @@ export default {
     return {
       visible: false,
       isReady: true,
-      cellObj: { id: '', cellType: '' }
+      attributeList:{
+        jvm:['duNo','verion','path','runParam','ext'],
+        tomcat:['duNo','verion','port','ext'],
+        zookeeper:['connectUrl','verion','port','ext'],
+        nginx:['listenPort','serverName','ext'],
+        mysql:['dbName','verion','configExt','type','cmdbNo','dbUrl'],
+        mq:['type','topic','broker','messageMode','messageVolume','queueName'],
+        msoa:['tps','ext','serviceId'],
+        redis:['duName','verion','port','ext','connectUrl','type'],
+        duLogic:['duName','duNo'],
+        '部署单元':['aaa'],
+        '后管':[],
+        '文件传输':[],
+        '虚拟机':[],
+        '物理机':[],
+      },
+      cellObj: { id: '', cellType: '',attribute:[]}
     }
   },
   mounted() {
@@ -86,6 +102,8 @@ export default {
         }
         this.cellObj.id = cell.prop('id')
         this.cellObj.cellType = cell.isNode() ? 'node' : 'edge'
+        // console.log(this.attributeList[cell.attrs.text.textWrap.text]);
+        this.cellObj.attribute = this.attributeList[cell.attrs.text.textWrap.text]
       })
       this.isReady = true
       const resizeFn = () => {

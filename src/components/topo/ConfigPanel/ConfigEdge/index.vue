@@ -23,7 +23,9 @@
     <el-row>
       <el-col :span="8" align="middle">相关操作 : </el-col>
       <el-col :span="14">
-        <el-button type="text" icon="el-icon-delete" @click="deleteEdge">删除边</el-button>
+        <el-button type="text" icon="el-icon-delete" @click="deleteEdge"
+          >删除边</el-button
+        >
       </el-col>
     </el-row>
   </div>
@@ -164,7 +166,7 @@ export default {
 .el-row {
   margin: 10px 5px;
 }
-.el-col{
+.el-col {
   line-height: 36px;
 }
 </style>

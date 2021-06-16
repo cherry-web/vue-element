@@ -196,7 +196,7 @@ export default class FlowGraph {
             columns: 1,
             marginX: 60
           },
-          graphHeight: 260
+          graphHeight: 200
         },
         {
           name: 'businessModule',
@@ -206,7 +206,7 @@ export default class FlowGraph {
         {
           name: 'basicModule',
           title: '基础组件库',
-          graphHeight: 260
+          graphHeight: 480
         }
       ]
     })
