@@ -1,4 +1,4 @@
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/topo-construct/graph'
 
 export function gridOpt (globalGridAttr) {
   let options

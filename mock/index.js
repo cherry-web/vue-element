@@ -3,18 +3,22 @@ const { param2Obj } = require('./utils')
 
 const user = require('./user')
 const role = require('./role')
+const ref = require('./ref')
 const article = require('./article')
 const search = require('./remote-search')
 const component = require('./component')
 const topologicalList = require('./topological-list')
+const topoList = require('./topoList')
 
 const mocks = [
   ...user,
   ...role,
+  ...ref,
   ...article,
   ...search,
   ...component,
-  ...topologicalList
+  ...topologicalList,
+  ...topoList
 ]
 
 // for front mock

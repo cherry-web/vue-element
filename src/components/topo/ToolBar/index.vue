@@ -1,10 +1,10 @@
 <template>
   <div class="bar">
-      <el-button name="delete" @click.prevent.stop="handleClick" class="item-space" size="small" icon="delete" >
+    <el-button name="delete" class="item-space" size="small" icon="delete" @click.prevent.stop="handleClick">
       清除
-      </el-button>
+    </el-button>
 
-      <el-button :disabled="!canUndo" name="undo" @click="handleClick" class="item-space" size="small" icon="undo">
+    <!-- <el-button :disabled="!canUndo" name="undo" @click="handleClick" class="item-space" size="small" icon="undo">
       撤销
       </el-button>
       <el-button :disabled="!canRedo" name="redo" @click="handleClick" class="item-space" size="small" icon="redo">
@@ -21,48 +21,49 @@
 
       <el-button name="paste" @click="handleClick" class="item-space" size="small" icon="snippets">
       粘贴
-      </el-button>
+      </el-button> -->
 
-      <el-button name="savePNG" @click="handleClick" class="item-space" size="small" icon="download">
-        保存PNG
-      </el-button>
+    <el-button name="savePNG" class="item-space" size="small" icon="download" @click="handleClick">
+      保存PNG
+    </el-button>
 
-      <el-button name="saveSVG" @click="handleClick" class="item-space" size="small" icon="download">
-        保存SVG
-      </el-button>
+    <el-button name="saveSVG" class="item-space" size="small" icon="download" @click="handleClick">
+      保存SVG
+    </el-button>
 
-      <el-button name="print" @click="handleClick" class="item-space" size="small" icon="printer">
+    <el-button name="print" class="item-space" size="small" icon="printer" @click="handleClick">
       打印
-      </el-button>
+    </el-button>
 
-      <el-button name="toJSON" @click="handleClick" class="item-space" size="small">
-        导出toJSON
-      </el-button>
+    <el-button name="toJSON" class="item-space" size="small" @click="handleClick">
+      导出toJSON
+    </el-button>
 
   </div>
 </template>
 
 <script>
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 import { DataUri } from '@antv/x6'
+import svgData from '@/views/main/topo-construct/graph/svgData'
 
 export default {
   name: 'Index',
   components: {
   },
-  data () {
+  data() {
     return {
       canUndo: '',
       canRedo: ''
     }
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
       this.initEvent()
     }, 200)
   },
   methods: {
-    initEvent () {
+    initEvent() {
       const { graph } = FlowGraph
       const { history } = graph
       history.on('change', () => {
@@ -86,7 +87,7 @@ export default {
         return false
       })
       graph.bindKey('ctrl+s', () => {
-          // 导出 PNG/JPEG
+        // 导出 PNG/JPEG
         graph.toPNG((datauri) => {
           DataUri.downloadDataUri(datauri, 'chart.png')
         })
@@ -100,7 +101,7 @@ export default {
       graph.bindKey('ctrl+v', this.paste)
       graph.bindKey('ctrl+x', this.cut)
     },
-    copy () {
+    copy() {
       const { graph } = FlowGraph
       const cells = graph.getSelectedCells() // 获取选中的节点/边
       if (cells.length) {
@@ -108,7 +109,7 @@ export default {
       }
       return false
     },
-    cut () {
+    cut() {
       const { graph } = FlowGraph
       const cells = graph.getSelectedCells()
       if (cells.length) {
@@ -116,7 +117,7 @@ export default {
       }
       return false
     },
-    paste () {
+    paste() {
       const { graph } = FlowGraph
       if (!graph.isClipboardEmpty()) { // 返回剪切板是否为空
         const cells = graph.paste({ offset: 32 }) // 粘贴到画布的节点/边的偏移量
@@ -128,7 +129,7 @@ export default {
       }
       return false
     },
-    handleClick (event) {
+    handleClick(event) {
       const { graph } = FlowGraph
       const name = event.currentTarget.name
       switch (name) {
@@ -140,6 +141,9 @@ export default {
           break
         case 'delete':
           graph.clearCells()
+          this.$nextTick(function() {
+            graph.fromJSON(svgData)
+          })
           break
         case 'savePNG':
           graph.toPNG((dataUri) => {
@@ -176,9 +180,9 @@ export default {
           break
         case 'toJSON':
           console.log(graph.toJSON())
-          console.log(graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]}))
+          console.log(graph.fromJSON({ cells: [graph.toJSON().cells[0], graph.toJSON().cells[1]] }))
           // graph.fromJSON按照指定的 JSON 数据渲染节点和边
-          graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]})
+          // graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]})
           break
         default:
           break

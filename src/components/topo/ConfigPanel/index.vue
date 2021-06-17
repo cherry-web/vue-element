@@ -1,16 +1,17 @@
 <template>
   <div class="config">
-    <!-- <config-grid v-show="type === 'grid'" :globalGridAttr="globalGridAttr" :id="id"/>
-    <config-node v-show="type === 'node'" :globalGridAttr="globalGridAttr" :id="id"/> -->
-    <config-edge v-show="type === 'edge'" :globalGridAttr="globalGridAttr" :id="id"/>
+    <!-- <config-grid v-show="type === 'grid'" :globalGridAttr="globalGridAttr" :id="id"/>-->
+    <config-node v-show="type === 'node'" :id="id" :global-grid-attr="globalGridAttr" />
+    <config-edge v-show="type === 'edge'" :id="id" :global-grid-attr="globalGridAttr" />
   </div>
 </template>
 
 <script>
-import ConfigGrid from './ConfigGrid/index'
+// import ConfigGrid from './ConfigGrid/index'
 import ConfigNode from './ConfigNode/index'
 import ConfigEdge from './ConfigEdge/index'
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
+import { getAttribute } from '@antv/x6/lib/util/dom/attr'
 // import './index.less'
 const globalGridAttr = {
   type: 'mesh',
@@ -28,7 +29,7 @@ const globalGridAttr = {
   bgSize: JSON.stringify({ width: 150, height: 150 }),
   opacity: 0.1,
 
-  stroke: '#5F95FF',
+  stroke: 'black',
   strokeWidth: 1,
   strokeDasharray: '0',
   connector: 'normal',
@@ -39,28 +40,40 @@ const globalGridAttr = {
   nodeFill: '#ffffff',
   nodeFontSize: 12,
   nodeColor: '#080808',
-  nodeUsers: ''
+  nodeUsers: '',
+  attributeList:[]
 }
 
 export default {
   name: 'Index',
   components: {
-    ConfigGrid,
+    // ConfigGrid,
     ConfigNode,
     ConfigEdge
   },
   props: {
-    id: {
-      type: String,
+    cellObj: {
+      type: Object,
       default: null,
       require: true
     }
   },
   data() {
     return {
-      type: 'edge',
-      // id: '',
-      globalGridAttr: globalGridAttr
+      type: this.cellObj.cellType || '',
+      id: this.cellObj.id,
+      globalGridAttr: globalGridAttr,
+    }
+  },
+  watch: {
+    cellObj: {
+      handler(nv) {
+        this.type = nv.cellType
+        this.id = nv.id
+        this.globalGridAttr.attributeList = nv.attribute
+      },
+      immediate: true,
+      deep: true
     }
   },
   mounted() {
@@ -71,12 +84,14 @@ export default {
   methods: {
     boundEvent() {
       const { graph } = FlowGraph
+      // blank 画布空白区域
       graph.on('blank:click', () => {
         this.type = 'grid'
       })
-      graph.on('cell:click', ({ cell }) => {
-        this.type = cell.isNode() ? 'node' : 'edge'
-        this.id = cell.id
+      // 边点击事件
+      graph.on('edge:click', ({ edge }) => {
+        // this.type = cell.isNode() ? 'node' : 'edge'
+        this.id = edge.id
       })
     }
   }

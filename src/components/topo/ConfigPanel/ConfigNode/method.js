@@ -1,6 +1,6 @@
-import FlowGraph from '@/views/topo/graph'
+import FlowGraph from '@/views/main/topo-construct/graph'
 
-export function nodeOpt (id, globalGridAttr) {
+export function nodeOpt(id, globalGridAttr) {
   let curCel = null
   if (id) {
     const { graph } = FlowGraph
@@ -9,12 +9,7 @@ export function nodeOpt (id, globalGridAttr) {
       return
     }
     curCel = cell
-    globalGridAttr.nodeStroke = cell.attr('body/stroke')
-    globalGridAttr.nodeStrokeWidth = cell.attr('body/strokeWidth')
-    globalGridAttr.nodeFill = cell.attr('body/fill')
-    globalGridAttr.nodeFontSize = cell.attr('text/fontSize')
-    globalGridAttr.nodeColor = cell.attr('text/fill')
-    globalGridAttr.nodeUsers = cell.attr('approve/users')
+    globalGridAttr.label = cell.attr('text/textWrap/text')
   }
   return curCel
 }

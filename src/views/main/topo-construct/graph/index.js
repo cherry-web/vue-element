@@ -1,4 +1,4 @@
-import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
+import { Graph, Addon, Shape } from '@antv/x6'
 import './nodeData'
 // import graphData from './edgeData'
 import svgData from './svgData'
@@ -15,23 +15,23 @@ export default class FlowGraph {
       container: document.getElementById('flowContainer'),
       width: 1300,
       height: 800,
-      interacting: function (cellView) {
-        if (cellView.cell.id == 'mainMachineRoom') {
+      interacting: function(cellView) {
+        if (cellView.cell.id === 'mainMachineRoom') {
           return { nodeMovable: false }
         }
-        if (cellView.cell.id == 'OAArea') {
+        if (cellView.cell.id === 'OAArea') {
           return { nodeMovable: false }
         }
-        if (cellView.cell.id == 'coreArea') {
+        if (cellView.cell.id === 'coreArea') {
           return { nodeMovable: false }
         }
-        if (cellView.cell.id == 'DMZArea') {
+        if (cellView.cell.id === 'DMZArea') {
           return { nodeMovable: false }
         }
-        if (cellView.cell.id == 'publicNetArea') {
+        if (cellView.cell.id === 'publicNetArea') {
           return { nodeMovable: false }
         }
-        if (cellView.cell.id == 'lineArea') {
+        if (cellView.cell.id === 'lineArea') {
           return { nodeMovable: false }
         }
         return true
@@ -43,13 +43,8 @@ export default class FlowGraph {
         args: [
           {
             color: '#cccccc', // 主网格线颜色
-            thickness: 1  // 主网格线宽度
-          },
-          // {
-          //   color: '#5F95FF',
-          //   thickness: 1,
-          //   factor: 4  // 主次网格线间隔
-          // }
+            thickness: 1 // 主网格线宽度
+          }
         ]
       },
       // 限制子节点自由
@@ -58,12 +53,12 @@ export default class FlowGraph {
           const cell = view.cell
           if (cell.isNode()) {
             const parent = cell.getParent()
-            if (parent && (parent.prop('shape') == 'flowGroupNode')) {
+            if (parent && (parent.prop('shape') === 'flowGroupNode')) {
               return parent.getBBox()
             }
           }
           return null
-        },
+        }
       },
       // 画布调整
       scroller: {
@@ -79,7 +74,7 @@ export default class FlowGraph {
       autoResize: true,
       panning: {
         enabled: true,
-        modifiers: 'shift',
+        modifiers: 'shift'
       },
       // 画布调整
       selecting: {
@@ -97,18 +92,19 @@ export default class FlowGraph {
         allowBlank: false, // 是否允许连接到画布空白位置的点
         highlight: true, // 拖动边时，是否高亮显示所有可用的连接桩或节点
         snap: { // 连线的过程中距离节点或者连接桩 50px 时会触发自动吸附
-          radius: 50,
+          radius: 50
         }, // 可以通过配置 radius 属性自定义触发吸附的距离
         createEdge() { // 连接的过程中创建新的边
           return new Shape.Edge({
             attrs: {
               line: {
-                stroke: '#faad14',
+                stroke: 'black',
                 targetMarker: 'classic',
-              },
+                strokeDasharray: '0'
+              }
             },
             connector: {
-              name: 'rounded',
+              name: 'rounded'
             },
             router: {
               // 曼哈顿路由 'manhattan' 路由是正交路由 'orth' 的智能版本，该路由由水平或垂直的正交线段组成，并自动避开路径上的其他节点（障碍）
@@ -134,7 +130,7 @@ export default class FlowGraph {
             return false
           }
           return true
-        },
+        }
       },
       highlighting: {
         // 当链接桩可以被链接时，在链接桩外围渲染一个 4px 宽的rgba(223,234,255)色矩形框
@@ -200,7 +196,7 @@ export default class FlowGraph {
             columns: 1,
             marginX: 60
           },
-          graphHeight: 260
+          graphHeight: 200
         },
         {
           name: 'businessModule',
@@ -210,7 +206,7 @@ export default class FlowGraph {
         {
           name: 'basicModule',
           title: '基础组件库',
-          graphHeight: 260
+          graphHeight: 480
         }
       ]
     })
@@ -218,9 +214,9 @@ export default class FlowGraph {
     const stencilContainer = document.querySelector('#flowStencil')
     stencilContainer.appendChild(this.stencil.container)
   }
-  //描绘节点
+  // 描绘节点
   static initShape() {
-    stencilShape.stencilShape(this);
+    stencilShape.stencilShape(this)
   }
   // 描绘背景节点
   static initGraphShape() {
@@ -231,7 +227,7 @@ export default class FlowGraph {
     graphEvent.graphEvent(this)
   }
   static mainChange() {
-
+    
   }
   // 销毁
   static destroy() {

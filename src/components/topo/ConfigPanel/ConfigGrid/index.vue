@@ -4,7 +4,15 @@
       <el-row align="middle">
         <el-col :span="10">Grid Type</el-col>
         <el-col :span="12">
-          <el-select style="width: 100%" :value="globalGridAttr.type" @change="(val) => { globalGridAttr.type = val }">
+          <el-select
+            style="width: 100%"
+            :value="globalGridAttr.type"
+            @change="
+              (val) => {
+                globalGridAttr.type = val;
+              }
+            "
+          >
             <el-option :value="GRID_TYPE.DOT">Dot</el-option>
             <el-option :value="GRID_TYPE.FIXED_DOT">Fixed Dot</el-option>
             <el-option :value="GRID_TYPE.MESH">Mesh</el-option>
@@ -15,7 +23,17 @@
       <el-row align="middle">
         <el-col :span="10">Grid Size</el-col>
         <el-col :span="10">
-          <el-slider :min="1" :max="20" :step="1" :value="globalGridAttr.size" @change="(val) => { globalGridAttr.size = val }"/>
+          <el-slider
+            :min="1"
+            :max="20"
+            :step="1"
+            :value="globalGridAttr.size"
+            @change="
+              (val) => {
+                globalGridAttr.size = val;
+              }
+            "
+          />
         </el-col>
         <el-col :span="2">
           <div class="result">{{ globalGridAttr.size }}</div>
@@ -29,14 +47,28 @@
               type="color"
               :value="globalGridAttr.color"
               style="width: 100%"
-              @change="(e) => { globalGridAttr.color = e.target.value }"
+              @change="
+                (e) => {
+                  globalGridAttr.color = e.target.value;
+                }
+              "
             />
           </el-col>
         </el-row>
         <el-row align="middle">
           <el-col :span="10">Primary Thickness</el-col>
           <el-col :span="10">
-            <el-slider :min="0.5" :max="10" :step="0.5" :value="globalGridAttr.thickness" @change="(val) => { globalGridAttr.thickness = val }"/>
+            <el-slider
+              :min="0.5"
+              :max="10"
+              :step="0.5"
+              :value="globalGridAttr.thickness"
+              @change="
+                (val) => {
+                  globalGridAttr.thickness = val;
+                }
+              "
+            />
           </el-col>
           <el-col :span="2">
             <div class="result">{{ globalGridAttr.thickness.toFixed(1) }}</div>
@@ -45,7 +77,16 @@
         <el-row align="middle">
           <el-col :span="10">Secondary Color</el-col>
           <el-col :span="12">
-            <el-input type="color" :value="globalGridAttr.colorSecond" style="width: 100%" @change="(e) => { globalGridAttr.colorSecond = e.target.value }"/>
+            <el-input
+              type="color"
+              :value="globalGridAttr.colorSecond"
+              style="width: 100%"
+              @change="
+                (e) => {
+                  globalGridAttr.colorSecond = e.target.value;
+                }
+              "
+            />
           </el-col>
         </el-row>
         <el-row align="middle">
@@ -56,11 +97,17 @@
               :max="10"
               :step="0.5"
               :value="globalGridAttr.thicknessSecond"
-              @change="(val) => { globalGridAttr.thicknessSecond = val }"
+              @change="
+                (val) => {
+                  globalGridAttr.thicknessSecond = val;
+                }
+              "
             />
           </el-col>
           <el-col :span="2">
-            <div class="result">{{ globalGridAttr.thicknessSecond.toFixed(1) }}</div>
+            <div class="result">
+              {{ globalGridAttr.thicknessSecond.toFixed(1) }}
+            </div>
           </el-col>
         </el-row>
         <el-row align="middle">
@@ -71,7 +118,11 @@
               :max="10"
               :step="1"
               :value="globalGridAttr.factor"
-              @change="(val) => {globalGridAttr.factor = val}"
+              @change="
+                (val) => {
+                  globalGridAttr.factor = val;
+                }
+              "
             />
           </el-col>
           <el-col :span="2">
@@ -83,13 +134,32 @@
         <el-row align="middle">
           <el-col :span="10">Grid Color</el-col>
           <el-col :span="12">
-            <el-input type="color" :value="globalGridAttr.color" style="width: 100%" @change="(e) => { globalGridAttr.color = e.target.value }" />
+            <el-input
+              type="color"
+              :value="globalGridAttr.color"
+              style="width: 100%"
+              @change="
+                (e) => {
+                  globalGridAttr.color = e.target.value;
+                }
+              "
+            />
           </el-col>
         </el-row>
         <el-row align="middle">
           <el-col :span="10">Thickness</el-col>
           <el-col :span="10">
-            <el-slider :min="0.5" :max="10" :step="0.5" :value="globalGridAttr.thickness" @change="(val) => { globalGridAttr.thickness = val }"/>
+            <el-slider
+              :min="0.5"
+              :max="10"
+              :step="0.5"
+              :value="globalGridAttr.thickness"
+              @change="
+                (val) => {
+                  globalGridAttr.thickness = val;
+                }
+              "
+            />
           </el-col>
           <el-col :span="1">
             <div class="result">{{ globalGridAttr.thickness.toFixed(1) }}</div>
@@ -102,12 +172,28 @@
       <el-row align="middle">
         <el-col :span="6">Color</el-col>
         <el-col :span="14">
-          <el-input type="color" :value="globalGridAttr.bgColor" style="width: 100%" @change="(e) => { globalGridAttr.bgColor = e.target.value }"/>
+          <el-input
+            type="color"
+            :value="globalGridAttr.bgColor"
+            style="width: 100%"
+            @change="
+              (e) => {
+                globalGridAttr.bgColor = e.target.value;
+              }
+            "
+          />
         </el-col>
       </el-row>
       <el-row align="middle">
         <el-col :span="14" :offset="6">
-          <el-checkbox :checked="globalGridAttr.showImage" @change="(e) => { globalGridAttr.showImage = e.target.checked }">
+          <el-checkbox
+            :checked="globalGridAttr.showImage"
+            @change="
+              (e) => {
+                globalGridAttr.showImage = e.target.checked;
+              }
+            "
+          >
             Show Image
           </el-checkbox>
         </el-col>
@@ -116,7 +202,15 @@
         <el-row align="middle">
           <el-col :span="6">Repeat</el-col>
           <el-col :span="14">
-            <el-select style="width: 100%" :value="globalGridAttr.repeat" @change="(val) => { globalGridAttr.repeat = val }">
+            <el-select
+              style="width: 100%"
+              :value="globalGridAttr.repeat"
+              @change="
+                (val) => {
+                  globalGridAttr.repeat = val;
+                }
+              "
+            >
               <el-option :value="REPEAT_TYPE.NO_REPEAT">No Repeat</el-option>
               <el-option :value="REPEAT_TYPE.REPEAT">Repeat</el-option>
               <el-option :value="REPEAT_TYPE.REPEAT_X">Repeat X</el-option>
@@ -136,7 +230,17 @@
               Watermark Angle
             </el-col>
             <el-col :span="14" :offset="6">
-              <el-slider :min="0" :max="360" :step="1" :value="globalGridAttr.angle" @change="(val) => { globalGridAttr.angle = val }"/>
+              <el-slider
+                :min="0"
+                :max="360"
+                :step="1"
+                :value="globalGridAttr.angle"
+                @change="
+                  (val) => {
+                    globalGridAttr.angle = val;
+                  }
+                "
+              />
             </el-col>
             <el-col :span="2">
               <div class="result">{{ globalGridAttr.angle }}</div>
@@ -147,7 +251,15 @@
         <el-row align="middle">
           <el-col :span="6">Position</el-col>
           <el-col :span="14">
-            <el-select style="width: 100%" :value="globalGridAttr.position" @change="(val) => { globalGridAttr.position = val }">
+            <el-select
+              style="width: 100%"
+              :value="globalGridAttr.position"
+              @change="
+                (val) => {
+                  globalGridAttr.position = val;
+                }
+              "
+            >
               <el-option value="center">center</el-option>
               <el-option value="left">left</el-option>
               <el-option value="right">right</el-option>
@@ -163,7 +275,15 @@
         <el-row align="middle">
           <el-col :span="6">Size</el-col>
           <el-col :span="14">
-            <el-select style="width: 100%" :value="globalGridAttr.bgSize" @change="(val) => {globalGridAttr.bgSize = val}" >
+            <el-select
+              style="width: 100%"
+              :value="globalGridAttr.bgSize"
+              @change="
+                (val) => {
+                  globalGridAttr.bgSize = val;
+                }
+              "
+            >
               <el-option value="auto auto">auto auto</el-option>
               <el-option value="cover">cover</el-option>
               <el-option value="contain">contain</el-option>
@@ -183,14 +303,17 @@
               :max="1"
               :step="0.05"
               :value="globalGridAttr.opacity"
-              @change="(val) => {globalGridAttr.opacity = val}"
+              @change="
+                (val) => {
+                  globalGridAttr.opacity = val;
+                }
+              "
             />
           </el-col>
           <el-col :span="4">
             <div class="result">{{ globalGridAttr.opacity.toFixed(2) }}</div>
           </el-col>
         </el-row>
-
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -297,5 +420,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 </style>

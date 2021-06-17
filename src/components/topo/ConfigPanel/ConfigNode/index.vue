@@ -1,58 +1,38 @@
 <template>
-  <el-tabs defaultActiveKey="1">
-    <el-tab-pane tab="节点" key="1">
-      <el-row align="middle">
-        <el-col :span="8">Border Color</el-col>
-        <el-col :span="14">
-          <el-input type="color" :value="globalGridAttr.nodeStroke" style="width: 100%" @change="onStrokeChange"/>
-        </el-col>
-      </el-row>
-      <el-row align="middle">
-        <el-col :span="8">Border Width</el-col>
-        <el-col :span="12">
-          <el-slider :min="1" :max="5" :step="1" :value="globalGridAttr.nodeStrokeWidth" @change="onStrokeWidthChange"/>
-        </el-col>
-        <el-col :span="2">
-          <div class="result">{{ globalGridAttr.nodeStrokeWidth }}</div>
-        </el-col>
-      </el-row>
-      <el-row align="middle">
-        <el-col :span="8">Fill</el-col>
-        <el-col :span="14">
-          <el-input type="color" :value="globalGridAttr.nodeFill" style="width: 100%" @change="onFillChange"/>
-        </el-col>
-      </el-row>
-    </el-tab-pane>
-    <el-tab-pane tab="文本" key="2">
-      <el-row align="middle">
-        <el-col :span="8">Font Size</el-col>
-        <el-col :span="12">
-          <el-slider :min="8" :max="16" :step="1" :value="globalGridAttr.nodeFontSize" @change="onFontSizeChange"/>
-        </el-col>
-        <el-col :span="2">
-          <div class="result">{{ globalGridAttr.nodeFontSize }}</div>
-        </el-col>
-      </el-row>
-      <el-row align="middle">
-        <el-col :span="8">Font Color</el-col>
-        <el-col :span="14">
-          <el-input type="color" :value="globalGridAttr.nodeColor" style="width: 100%" @change="onColorChange"/>
-        </el-col>
-      </el-row>
-    </el-tab-pane>
-    <el-tab-pane tab="属性" key="3">
-      <el-row align="middle">
-        <el-col :span="8">Assign Users</el-col>
-        <el-col :span="14">
-          <el-input :value="globalGridAttr.nodeUsers" style="width: 100%" @change="onUsersChange"/>
-        </el-col>
-      </el-row>
-    </el-tab-pane>
+  <el-tabs default-active-key="1">
+    <el-form :model="globalGridAttr" label-width="80px">
+      <el-form-item label="名称 :">
+        {{ globalGridAttr.label }}
+        <!-- <el-input
+          disabled
+          v-model="globalGridAttr.label"
+          size="mini"
+          style="width: 100px"
+          @change="onLabelChange"
+        /> -->
+      </el-form-item>
+      <el-form-item
+        v-for="item in globalGridAttr.attributeList"
+        :key="item"
+        :label="item + ' :'"
+        :value="item"
+        >{{ item }}</el-form-item
+      >
+    </el-form>
+    <el-row>
+      <el-col :span="8" align="middle">相关操作 : </el-col>
+      <el-col :span="14">
+        <el-button type="text" icon="el-icon-delete" @click="deleteNode"
+          >删除节点</el-button
+        >
+      </el-col>
+    </el-row>
   </el-tabs>
 </template>
 
 <script>
 import { nodeOpt } from './method'
+import FlowGraph from '@/views/main/topo-construct/graph'
 
 export default {
   name: 'Index',
@@ -68,13 +48,13 @@ export default {
       require: true
     }
   },
-  data () {
+  data() {
     return {
       curCel: ''
     }
   },
   computed: {
-    nodeIdCpt () {
+    nodeIdCpt() {
       return {
         id: this.id
       }
@@ -82,47 +62,56 @@ export default {
   },
   watch: {
     nodeIdCpt: {
-      handler (nv) {
+      handler(nv) {
         this.curCel = nodeOpt(nv, this.globalGridAttr)
       },
-      immediate: false,
-      deep: false
+      immediate: true,
+      deep: true
     }
   },
   methods: {
-    onStrokeChange (e) {
-      const val = e.target.value
-      this.globalGridAttr.nodeStroke = val
-      this.curCel.attr('body/stroke', val)
+    onLabelChange(val) {
+      this.globalGridAttr.label = val
+      this.curCel.attr('text/textWrap/text', val)
+      console.log(this.globalGridAttr.attributeList);
     },
-    onStrokeWidthChange (val) {
-      this.globalGridAttr.nodeStrokeWidth = val
-      this.curCel.attr('body/strokeWidth', val)
-    },
-    onFillChange (e) {
-      const val = e.target.value
-      this.globalGridAttr.nodeFill = val
-      this.curCel.attr('body/fill', val)
-    },
-    onFontSizeChange (val) {
-      this.globalGridAttr.nodeFontSize = val
-      this.curCel.attr('text/fontSize', val)
-    },
-    onColorChange (e) {
-      const val = e.target.value
-      this.globalGridAttr.nodeColor = val
-      this.curCel.attr('text/fill', val)
-    },
-    onUsersChange (e) {
-      const val = e.target.value
-      this.globalGridAttr.nodeUsers = val
-      this.curCel.attr('approve/users', val)
+    deleteNode() {
+      const { graph } = FlowGraph
+      console.log(this.id)
+      const cell = graph.getCellById(this.id)
+      let cells = []
+      if(cell.children !== null && cell.children.length){
+      cells = [].concat(cell.children)
+      }
+      cells.push(cell)
+      this.$confirm('此操作将永久删除该节点及其子节点, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          graph.removeCells(cells)
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     }
-
   }
 }
 </script>
 
 <style lang="less" scoped>
-
+.el-row {
+  margin: 10px 5px;
+}
+.el-col {
+  line-height: 36px;
+}
 </style>
