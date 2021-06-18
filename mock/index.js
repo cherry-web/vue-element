@@ -1,8 +1,8 @@
 const Mock = require('mockjs')
 const { param2Obj } = require('./utils')
 
-const user = require('./user')
-const role = require('./role')
+// const user = require('./user')
+// const role = require('./role')
 const ref = require('./ref')
 const article = require('./article')
 const search = require('./remote-search')
@@ -11,8 +11,8 @@ const topologicalList = require('./topological-list')
 const topoList = require('./topoList')
 
 const mocks = [
-  ...user,
-  ...role,
+  // ...user,
+  // ...role,
   ...ref,
   ...article,
   ...search,

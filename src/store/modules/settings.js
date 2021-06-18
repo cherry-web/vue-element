@@ -1,7 +1,7 @@
 import variables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
 
-const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
+const { showSettings, fixedHeader, tagsView,sidebarLogo } = defaultSettings
 
 const state = {
   theme: variables.theme,
@@ -25,11 +25,11 @@ const actions = {
     commit('CHANGE_SETTING', data)
   }
 }
-
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
+  tagsView
 }
 

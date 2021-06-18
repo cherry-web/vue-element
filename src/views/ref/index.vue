@@ -1,88 +1,199 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" type="primary" icon="el-icon-plus" size="mini" @click="handleCreate">
+      <el-button
+        class="filter-item"
+        type="primary"
+        icon="el-icon-plus"
+        size="mini"
+        @click="handleCreate"
+      >
         新建
       </el-button>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" size="mini" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')"/>
-      <el-table-column label="关联名称" prop="refName" width="120px" align="center"/>
+    <el-table
+      v-loading="listLoading"
+      :data="list"
+      size="mini"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+      @sort-change="sortChange"
+    >
+      <el-table-column
+        label="序号"
+        prop="id"
+        sortable="custom"
+        align="center"
+        width="80"
+        :class-name="getSortClass('id')"
+      />
+      <el-table-column
+        label="关联名称"
+        prop="refName"
+        width="120px"
+        align="center"
+      />
       <el-table-column label="单向/双向" width="100px" align="center">
         <template slot-scope="{ row }">
-          <el-tag>{{row.refMode | modeFilter(row.refMode) }}</el-tag>
+          <el-tag>{{ row.refMode | modeFilter(row.refMode) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="关联类型" prop="refType" width="100px" align="center">
+      <el-table-column
+        label="关联类型"
+        prop="refType"
+        width="100px"
+        align="center"
+      >
         <template slot-scope="{ row }">
-          <span>{{ row.refType  | typeFilter(row.status)}}</span>
+          <span>{{ row.refType | typeFilter(row.status) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" width="100px" align="center">
         <template slot-scope="{ row }">
-          <el-tag>{{ row.status  | statusFilter(row.status)}}</el-tag>
+          <el-tag>{{ row.status | statusFilter(row.status) }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="备注" prop="refDesc" min-width="140px" align="center" show-overflow-tooltip/>
+      <el-table-column
+        label="备注"
+        prop="refDesc"
+        min-width="140px"
+        align="center"
+        show-overflow-tooltip
+      />
       <el-table-column label="创建时间" align="center" width="140">
         <template slot-scope="{ row }">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.createTime | parseTime("{y}-{m}-{d} {h}:{i}") }}</span>
         </template>
       </el-table-column>
       <el-table-column label="更新时间" align="center" width="140">
         <template slot-scope="{ row }">
-          <span>{{ row.updateTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.updateTime | parseTime("{y}-{m}-{d} {h}:{i}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="240" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="240"
+        class-name="small-padding fixed-width"
+      >
+        <template slot-scope="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-if="row.status != 'deleted'" type="danger" size="mini" @click="handleDelete(row,$index)">
+          <el-button
+            v-if="row.status != 'deleted'"
+            type="danger"
+            size="mini"
+            @click="handleDelete(row, $index)"
+          >
             删除
           </el-button>
-          <el-button v-if="row.status=='start'" size="mini" type="warning" @click="handleModifyStatus(row, 'end')">
+          <el-button
+            v-if="row.status == 'start'"
+            size="mini"
+            type="warning"
+            @click="handleModifyStatus(row, 'end')"
+          >
             停用
           </el-button>
-          <el-button v-if="row.status=='end'" size="mini" type="success" @click="handleModifyStatus(row, 'start')">
+          <el-button
+            v-if="row.status == 'end'"
+            size="mini"
+            type="success"
+            @click="handleModifyStatus(row, 'start')"
+          >
             启用
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total > 0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList"/>
-    
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left: 50px">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        label-width="90px"
+        style="width: 400px; margin-left: 50px"
+      >
         <el-form-item label="关联名称" prop="refName">
-          <el-input v-model="temp.refName" style="width:350px"/>
+          <el-input v-model="temp.refName" style="width: 350px" />
         </el-form-item>
         <el-form-item label="单向/双向" prop="refMode">
-          <el-select v-model="temp.refMode" class="filter-item" placeholder="Please select" style="width:350px">
-            <el-option v-for="item in modeOptions" :key="item.key" :value="item.key"  :label="item.label"></el-option>
+          <el-select
+            v-model="temp.refMode"
+            class="filter-item"
+            placeholder="Please select"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in modeOptions"
+              :key="item.key"
+              :value="item.key"
+              :label="item.label"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="关联类型" prop="refType">
-          <el-select v-model="temp.refType" class="filter-item" placeholder="Please select" style="width:350px">
-            <el-option v-for="item in typeOptions" :key="item.key" :value="item.key"  :label="item.label"></el-option>
+          <el-select
+            v-model="temp.refType"
+            class="filter-item"
+            placeholder="Please select"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.key"
+              :value="item.key"
+              :label="item.label"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select" style="width:350px">
-            <el-option v-for="item in statusOptions" :key="item.key" :value="item.key"  :label="item.label"></el-option>
+          <el-select
+            v-model="temp.status"
+            class="filter-item"
+            placeholder="Please select"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.key"
+              :value="item.key"
+              :label="item.label"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="refDesc">
-          <el-input type="textarea" v-model="temp.refDesc" style="width:350px"/>
+          <el-input
+            type="textarea"
+            v-model="temp.refDesc"
+            style="width: 350px"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogFormVisible = false"> 取消 </el-button>
-        <el-button type="primary" size="mini" @click="dialogStatus === 'create' ? createData() : updateData()">
-          保存
+        <el-button size="mini" @click="dialogFormVisible = false">
+          取消
+        </el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          @click="dialogStatus === 'create' ? createData() : updateData()"
+        >
+          确定
         </el-button>
       </div>
     </el-dialog>
