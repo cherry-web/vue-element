@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: "topoInfo",
+  name: "TopoInfo",
   created() {},
 };
 </script>

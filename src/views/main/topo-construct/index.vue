@@ -35,7 +35,7 @@ import ToolBar from '@/components/topo/ToolBar'
 import ConfigPanel from '@/components/topo/ConfigPanel'
 
 export default {
-  name: 'Index',
+  name: 'TopoConstruct',
   components: {
     ToolBar,
     ConfigPanel

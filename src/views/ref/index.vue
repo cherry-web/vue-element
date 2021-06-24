@@ -216,7 +216,7 @@ const statusTypeKeyValue = deployStatusOptions.reduce((acc, cur) => {
 }, {});
 
 export default {
-  name: "refManger",
+  name: "RefManger",
   components: { Pagination },
   filters: {
     statusFilter(type) {

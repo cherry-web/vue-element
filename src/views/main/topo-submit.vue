@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: "topoSubmit",
+  name: "TopoSubmit",
   created() {},
 };
 </script>

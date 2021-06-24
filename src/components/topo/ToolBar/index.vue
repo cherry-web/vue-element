@@ -183,6 +183,9 @@ export default {
           console.log(graph.fromJSON({ cells: [graph.toJSON().cells[0], graph.toJSON().cells[1]] }))
           // graph.fromJSON按照指定的 JSON 数据渲染节点和边
           // graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]})
+          this.$nextTick(function() {
+            graph.fromJSON(svgData)
+          })
           break
         default:
           break

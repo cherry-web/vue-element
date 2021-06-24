@@ -105,7 +105,7 @@ const statusTypeKeyValue = deployStatusOptions.reduce((acc, cur) => {
 }, {});
 
 export default {
-  name: "refManger",
+  name: "TopologicalList",
   components: { Pagination },
   filters: {
     statusFilter(type) {
